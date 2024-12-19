@@ -26,23 +26,38 @@
 
 void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 	int i;
+	//파일 쓰기 모드로 열기
     FILE* file = fopen(HEALTHFILEPATH, "w");
     if (file == NULL) {
+    	//파일 열기 실패했을 때
         printf("There is no file for health data.\n");
         return;
     }
 
-    // ToCode: to save the chosen exercise and total calories burned 
-    fprintf(file, "[Exercises] \n");
+    // Exercise 정보 파일에 저장
+    fprintf(file, "[Exercises]\n ");
+    for (i=0;i<health_data->exercise_count;i++){
+    	//운동의 이름과 칼로리 소모 파일에 출력
+    	fprintf(file, "%s -%dkcal\n", health_data->exercises[i].exercise_name,health_data->exercises[i].calories_burned_per_minute);
+	}
     
     
-    // ToCode: to save the chosen diet and total calories intake 
+    //Diets 정보 파일에 저장
     fprintf(file, "\n[Diets] \n");
+    for (i=0;i<health_data->diet_count;i++){
+    	fprintf(file, "%s - %dKcal\n", health_data->diet[i].food_name, health_data->diet[i].calories_intake);
+	}
 
 
 
-    // ToCode: to save the total remaining calrories
+    // Total 정보 파일에 저장
     fprintf(file, "\n[Total] \n");
+    
+    //하루 권장 칼로리-총 섭취된칼로리+소모된 칼로리
+    int remaining_calories=DAILY_CALORIE_GOAL - health_data->total_calories_intake + health_data -> total_calories_burned;
+    //계산한 remaining calories 파일에 저장
+	fprintf(file, "Remaining calories : %d kcal\n", remaining_calories);
+	fclose(file);
     
     
 }
