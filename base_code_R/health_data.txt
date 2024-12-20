@@ -3,4 +3,5 @@
 [Diets] 
 
 [Total] 
-Remaining calories : 2000 kcal
+Basal metabolic rate - 1300 kcal
+The remaining calories - -1300 kcal

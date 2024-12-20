@@ -37,10 +37,10 @@ void loadDiets(const char* DIETFILEPATH) {
      
     char line[100];//한줄 읽어올 버퍼
     while (fgets(line,sizeof(line),file)!=NULL) {//한 줄씩 읽음
-    //(운동이름, 칼로리)를 성공적으로 읽었을때 운동정보를 exercise list에 저장, 사이즈 증가
-    	if(sscanf(line, "%s %d",exercise_list[exercise_size].exercise_name,&exercise_list[exercise_size].calories_burned_per_minute)minute)==2){
-    		exercise_list_size++;
-    		if (exercise_size>=MAX_EXERCISES){
+    //(음식이름, 칼로리)를 성공적으로 읽었을때 식단정보를 diet list에 저장, 사이즈 증가
+    	if(sscanf(line, "%s %d",diet_list[diet_list_size].food_name,&diet_list[diet_list_size].calories_intake)==2){
+    		diet_list_size++;
+    		if (diet_list_size>=MAX_DIETS){
     			break;
 			}
 		}else{

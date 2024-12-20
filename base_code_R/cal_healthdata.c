@@ -58,7 +58,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 
     // ToCode: to save the total remaining calrories
     fprintf(file, "\n[Total] \n");
-    remaining_calories = (health_data->total_calories_intake) - BASAL_METABOLIC_RATE - (health_data->total_calories_burned);
+    int remaining_calories = (health_data->total_calories_intake) - BASAL_METABOLIC_RATE - (health_data->total_calories_burned);
     fprintf(file, "Basal metabolic rate - %d kcal\n", BASAL_METABOLIC_RATE);
     fprintf(file, "The remaining calories - %d kcal\n", remaining_calories);
     

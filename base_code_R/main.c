@@ -57,7 +57,7 @@ int main() {
         switch (choice) {
             case 1:
             	//1번 선택했을 경우. 함수불러오기
-            	inputExercises(&health_data);
+            	inputExercise(&health_data);
             	
                 break;
                 

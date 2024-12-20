@@ -32,17 +32,24 @@ void loadExercises(const char* EXERCISEFILEPATH) {
         printf("There is no file for exercises! \n");
         return;
     }
-
-    // ToCode: to read a list of the exercises from the given file
-    while ( ) {
-    	
-        if (exercise_list_size >= MAX_EXERCISES){
-        	break;
+    
+    char line[100];//한줄 읽어올 버퍼
+    while (fgets(line,sizeof(line),file)!=NULL) {//한 줄씩 읽음
+    //(운동이름, 칼로리)를 성공적으로 읽었을때 운동정보를 exercise list에 저장, 사이즈 증가
+    	if(sscanf(line, "%s %d",exercise_list[exercise_list_size].exercise_name,&exercise_list[exercise_list_size].calories_burned_per_minute)==2){
+    		exercise_list_size++;
+    		if (exercise_list_size>=MAX_EXERCISES){
+    			break;
+			}
+		}else{
+			//잘못된 형식이 있을 경우
+			break;
 		}
     }
-
     fclose(file);
 }
+
+
 
 
 /*
@@ -67,7 +74,7 @@ void inputExercise(HealthData* health_data) {
 
 
     // ToCode: to enter the exercise to be chosen with exit option
-    // 운동을 선택하도록, 종료 옵션도 제공 
+    // 유효한 식단 번호를 선택할 때까지 반복
     while (1){
 		printf("Choose the exercise number (0 = exit):");
 		scanf("%d", &choice);
@@ -75,36 +82,21 @@ void inputExercise(HealthData* health_data) {
 		if (choice==0){
 			printf("Exit.\n");
 			break;
-		}
-		//올바른 운동번호 일 때
-		else if(choice>0 && choice <= exercise_list_size){
-			printf("enter the duration of exercise(in min): ");
-			scanf("%d", &duration);
-			//입력한 지속 시간 유효한지 확인
-			if (duration<=0){
-				printf("Invalid duration. enter again.\n");
-				continue;
-		    }
-			//토탈 칼로리 계산
-			int total_calories_burned=exercise_list[choice].calories_burned_per_minute*duration;
-			//운동 데이터 health_data 파일에 기록 
-			int j;
-			for (j = 0; j < MAX_EXERCISE_NAME_LEN - 1 && exercise_list[choice].exercise_name[j]!= '\0'; j++) {
-                health_data->exercises[health_data->exercise_count].exercise_name[j] = exercise_list[choice].exercise_name[j];
-                health_data->exercises[health_data->exercise_count].exercise_name[j] = '\0';
-                //칼로리 정보 작성
-                health_data->exercises[health_data->exercise_count].calories_burned_per_minute = exercise_list[choice].calories_burned_per_minute;
-                int total_calories_burned=exercise_list[choice].calories_burned_per_minute*duration;
-                //지금까지 총 소모한 칼로리 갱신하기
-                health_data->total_calories_burned += total_calories_burned;
-                //운동 개수 카운트
-                health_data->exercise_count++;
-                printf("You burned %d calories.\n", total_calories_burned);
-                // 입력된 운동 번호가 잘못되었을 때  
-            }
-			}else{
-            	printf("Wrong choice. Choose again.\n");
-			}
-		}
-	}
+		}else if (choice<0||choice>=exercise_list_size){
+			printf("Wrong number. choose again.\n");
+		}else{
+			printf("Enter the duration of exercise (in min): ");
+	        scanf("%d",&duration);
+	        int total_burned_calories=duration*exercise_list[choice].calories_burned_per_minute;
+        	strncpy(health_data->exercises[health_data->exercise_count].exercise_name,exercise_list[choice - 1].exercise_name,MAX_EXERCISE_NAME_LEN - 1);
+            health_data->exercises[health_data->exercise_count].exercise_name[MAX_EXERCISE_NAME_LEN - 1] = '\0';
+            health_data->exercises[health_data->exercise_count].calories_burned_per_minute = exercise_list[choice - 1].calories_burned_per_minute;
+            health_data->total_calories_burned +=total_burned_calories;
+	        health_data->exercise_count++;
+	        printf("You burned %d calories.\n", total_burned_calories);
+	        
+	        
+        }
+    }
+}
 		
