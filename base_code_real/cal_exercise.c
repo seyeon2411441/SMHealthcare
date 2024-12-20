@@ -38,16 +38,17 @@ void loadExercises(const char* EXERCISEFILEPATH) {
     while (1 ) {
     	// 데이터 제대로 못읽으면 exercise_list_size 증가 시킴. 루프 계속됨
     	//읽은 값은 exercise_list 배열에 저장 
-    	if (fscanf(file, "%s, %d", exercise_list[exercise_list_size].exercise_name, &exercise_list[exercise_list_size].calories_burned_per_minute )!=2){
+    	if (fscanf(file, "%s %d", exercise_list[exercise_list_size].exercise_name, &exercise_list[exercise_list_size].calories_burned_per_minute )!=2){
     		break;
 		}
 		if (exercise_list_size >= MAX_EXERCISES){
 			break;
 		}
 		exercise_list_size++;
+	}
+	
+	fclose(file);
 }
-}
-
 /*
     description : to enter the selected exercise and the total calories burned in the health data
     input parameters : health_data - data object to which the selected exercise and its calories are added 
@@ -82,8 +83,8 @@ void inputExercise(HealthData* health_data) {
 			//토탈 칼로리 계산
 			int total_calories_burned=exercise_list[choice-1].calories_burned_per_minute*duration;
 			//운동 데이터 health_data 파일에 기록 
-			int i;
-			for (i = 0; i < MAX_EXERCISE_NAME_LEN - 1 && exercise_list[choice - 1].exercise_name[i] != '\0'; i++) {
+			int j;
+			for (j = 0; j < MAX_EXERCISE_NAME_LEN - 1 && exercise_list[choice - 1].exercise_name[i] != '\0'; i++) {
                 health_data->exercises[health_data->exercise_count].exercise_name[i] = exercise_list[choice - 1].exercise_name[i];
 		    }
 		    health_data->exercises[health_data->exercise_count].exercise_name[i] = '\0';
