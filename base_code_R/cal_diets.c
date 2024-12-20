@@ -80,6 +80,7 @@ void inputDiet(HealthData* health_data) {
 		if (choice==0){
 			printf("Exit.\n");
 			break;
+			//exercise 랑 diet 둘 다 이 때 0눌렀을때 메인함수 do 문으로 돌아갔으면 좋겠는데 자꾸 프로젝트가 종료돼요.. 이유룰 모르겠어서 그냥 냅니다ㅠㅠ,,
 		}
 		//유효 숫자일 때
 		if(choice>0 && choice <= diet_list_size){

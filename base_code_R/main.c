@@ -19,6 +19,9 @@
 #define HEALTHFILEPATH "health_data.txt"
 
 static int choice;
+void inputExercise(HealthData* health_data);
+void inputDiet(HealthData* health_data);
+//오류 떠서 메인 앞에 선언해놓음
 
 int main() {
 	//health_data 0으로 초기ㅗ하
@@ -30,6 +33,8 @@ int main() {
     loadExercises(EXERCISEFILEPATH);
     loadDiets(DIETFILEPATH);
     saveData(HEALTHFILEPATH,&health_data);
+    
+    
     //남은 칼로리 계산
     int remaining_calories=health_data.total_calories_intake-BASAL_METABOLIC_RATE-health_data.total_calories_burned;
     
@@ -55,6 +60,7 @@ int main() {
         
 		// ToCode: to run the sysmtem based on the user's choice
         switch (choice) {
+
             case 1:
             	//1번 선택했을 경우. 함수불러오기
             	inputExercise(&health_data);
