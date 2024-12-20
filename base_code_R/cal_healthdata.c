@@ -23,11 +23,14 @@
     			2. save the chosen diet and total calories intake 
     			3. save the total remaining calrories
 */
-
+//건강 데이터를 파일에 저장하는 함수
+//HEALTHFILEPATH 데이터를 저장할 파일 경로 
 void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
 	int i;
+	//쓰기모드로 파일 열기
     FILE* file = fopen(HEALTHFILEPATH, "w");
     if (file == NULL) {
+    	//파일 열기 실패했을 경우
         printf("There is no file for health data.\n");
         return;
     }
@@ -35,7 +38,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     // ToCode: to save the chosen exercise and total calories burned 
     fprintf(file, "[Exercises] \n");
     for (i=0;i<health_data->exercise_count;i++){
-    	//운동의 이름과 칼로리 소모 파일에 출력
+    	//운동의 이름과 칼로리 소모 파일에 기록
     	fprintf(file, "%s -%dkcal\n", health_data->exercises[i].exercise_name,health_data->exercises[i].calories_burned_per_minute);
     	
 	}
@@ -44,8 +47,9 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     // ToCode: to save the chosen diet and total calories intake 
     fprintf(file, "\n[Diets] \n");
     for (i=0;i<health_data->diet_count;i++){
+    	//for 문으로 음식 이름과 칼로리 파일에 기록
     	fprintf(file, "%s - %dKcal\n", health_data->diet[i].food_name, health_data->diet[i].calories_intake);
-    
+    	//총 섭취 칼로리도 기록
     	fprintf(file, "Total calories intake- %dkcal\n", health_data->total_calories_intake);
     	fclose(file);
     }
@@ -71,7 +75,7 @@ void saveData(const char* HEALTHFILEPATH, const HealthData* health_data) {
     			2. print out the saved history of diets
     			3. print out the saved history of calories
 */
-
+//health 데이터 출력 함수 
 void printHealthData(const HealthData* health_data) {
 	int i;
 	
