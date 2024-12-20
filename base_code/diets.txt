@@ -1,6 +1,0 @@
-rice 600
-bread 680
-chicken 925
-salad 70
-pizza 900
-tteokbokki 615
